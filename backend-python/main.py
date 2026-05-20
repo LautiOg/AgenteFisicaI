@@ -216,4 +216,7 @@ CONTEXTO BIBLIOGRÁFICO:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/documents")
-def docs(): return {"indexed": list(_load_indexed())}
+def docs():
+    ingest_new_pdfs()
+    return {"indexed": list(_load_indexed())}
+

@@ -1,0 +1,28 @@
+# Entornos virtuales de Python
+venv/
+.venv/
+env/
+
+# Dependencias de Node
+node_modules/
+frontend-react/node_modules/
+
+# Caché de Python
+**/__pycache__/
+*.pyc
+
+# Base de datos vectorial (ChromaDB se regenera automáticamente con los PDFs)
+backend-python/chroma_db/
+backend-python/chroma_db_google/
+
+# Credenciales y variables de entorno
+.env
+backend-python/.env
+
+# Build / Producción de React
+frontend-react/dist/
+frontend-react/dist-ssr/
+
+# Sistemas operativos
+.DS_Store
+Thumbs.db

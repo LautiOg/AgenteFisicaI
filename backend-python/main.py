@@ -25,7 +25,7 @@ DOCS_DIR      = os.path.join(os.path.dirname(__file__), "docs")
 CHROMA_DIR    = os.path.join(os.path.dirname(__file__), "chroma_db")
 INDEXED_FILE  = os.path.join(os.path.dirname(__file__), "indexed_files.json")
 
-LLM_MODEL = "gemini-flash-latest"
+LLM_MODEL = "gemini-2.0-flash"
 
 # Cargar múltiples API Keys y limpiar espacios/vacíos
 raw_keys = os.getenv("GOOGLE_API_KEY", "").split(",")

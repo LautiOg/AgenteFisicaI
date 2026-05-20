@@ -67,8 +67,8 @@ const VectorDiagram = ({ title, elements, zoom: initialZoom = 1.1 }) => {
         </div>
         <div className="vector-filters">
           {labels.map(label => (
-            <button 
-              key={label} 
+            <button
+              key={label}
               className={`filter-btn ${visibleItems[label] ? 'active' : ''}`}
               onClick={() => toggleItem(label)}
             >
@@ -77,8 +77,8 @@ const VectorDiagram = ({ title, elements, zoom: initialZoom = 1.1 }) => {
           ))}
         </div>
       </div>
-      
-      <div 
+
+      <div
         className="vector-viewport"
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
@@ -92,10 +92,10 @@ const VectorDiagram = ({ title, elements, zoom: initialZoom = 1.1 }) => {
             {/* Ejes Infinitos */}
             <line x1={-2000} y1={center} x2={2000} y2={center} stroke="#30363D" strokeWidth="1" strokeDasharray="5 5" />
             <line x1={center} y1={-2000} x2={center} y2={2000} stroke="#30363D" strokeWidth="1" strokeDasharray="5 5" />
-            
+
             {elements.map((el, i) => {
               if (el.label && !visibleItems[el.label]) return null;
-              
+
               const x = center + el.x * scale;
               const y = center - el.y * scale;
 
@@ -106,8 +106,8 @@ const VectorDiagram = ({ title, elements, zoom: initialZoom = 1.1 }) => {
                 return (
                   <g key={i}>
                     <circle cx={x} cy={y} r="6" fill={el.color || '#5865F2'} />
-                    <text x={x+10} y={y-10} fill="#000" fontSize="14" stroke="#000" strokeWidth="3" fontWeight="bold">{el.label}</text>
-                    <text x={x+10} y={y-10} fill="#fff" fontSize="14" fontWeight="bold">{el.label}</text>
+                    <text x={x + 10} y={y - 10} fill="#000" fontSize="14" stroke="#000" strokeWidth="3" fontWeight="bold">{el.label}</text>
+                    <text x={x + 10} y={y - 10} fill="#fff" fontSize="14" fontWeight="bold">{el.label}</text>
                   </g>
                 );
               }
@@ -186,17 +186,17 @@ function App() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hola 👋 Soy tu asistente de Física Avanzado. Puedo analizar movimientos circulares, diagramas vectoriales y versores. ¡Subí tu ejercicio!',
+      content: 'Hola 👋 Soy tu asistente de Física Avanzado. ¡Subí tu ejercicio!',
       sources: [],
     }
   ])
-  const [inputValue, setInputValue]   = useState('')
-  const [loading, setLoading]         = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const [loading, setLoading] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
-  const [docsInfo, setDocsInfo]       = useState({ documents: [], indexed: [], pending: [] })
-  const [graphType, setGraphType]     = useState('auto')
-  const chatBottomRef                 = useRef(null)
-  const fileInputRef                  = useRef(null)
+  const [docsInfo, setDocsInfo] = useState({ documents: [], indexed: [], pending: [] })
+  const [graphType, setGraphType] = useState('none')
+  const chatBottomRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   useEffect(() => { chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, loading])
   const fetchDocs = async () => { try { const res = await fetch(`${API_URL}/documents`); const data = await res.json(); setDocsInfo(data); } catch { } }
@@ -237,15 +237,15 @@ function App() {
     try {
       // Pasamos el historial de mensajes (ignorando el primer saludo del asistente)
       const historyToPass = messages.slice(1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content }));
-      
-      const res  = await fetch(`${API_URL}/chat`, {
-        method:  'POST',
+
+      const res = await fetch(`${API_URL}/chat`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ message: text || "Analizá esta imagen.", image: base64Image, graphType, history: historyToPass }),
+        body: JSON.stringify({ message: text || "Analizá esta imagen.", image: base64Image, graphType, history: historyToPass }),
       });
       const data = await res.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.response, sources: data.sources || [], charts: data.charts || [], diagrams: data.diagrams || [] }]);
-    } catch { 
+    } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: `❌ Error de conexión`, sources: [] }]);
     } finally { setLoading(false); }
   }
@@ -253,7 +253,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="header">
-        <div className="header-left"><span className="logo">⚛️</span><div><h1>Agente Física PRO</h1><p className="subtitle">Coordenadas Polares & Intrínsecas</p></div></div>
+        <div className="header-left"><span className="logo">⚛️</span><div><h1>Agente Física</h1><p className="subtitle">Tutor de Física Universitaria</p></div></div>
         <button className="ingest-btn" onClick={fetchDocs}>🔄 Sincronizar</button>
       </div>
 
@@ -270,7 +270,7 @@ function App() {
               <details className="sources-details">
                 <summary>📎 Referencias</summary>
                 <div className="sources-list">
-                  {msg.sources.map((s, i) => <div key={i} className="source-item"><strong>{s.source} (p {+s.page+1})</strong><span>{s.snippet}...</span></div>)}
+                  {msg.sources.map((s, i) => <div key={i} className="source-item"><strong>{s.source} (p {+s.page + 1})</strong><span>{s.snippet}...</span></div>)}
                 </div>
               </details>
             )}
@@ -285,26 +285,26 @@ function App() {
         <div className="input-area">
           <input type="file" ref={fileInputRef} onChange={handleImageSelect} style={{ display: 'none' }} accept="image/*" />
           <button className="icon-btn" onClick={() => fileInputRef.current.click()}><Paperclip size={20} /></button>
-          
-          <select 
-            value={graphType} 
+
+          <select
+            value={graphType}
             onChange={(e) => setGraphType(e.target.value)}
             className="graph-selector"
           >
             <option value="auto">Gráfico Automático</option>
-            <option value="cartesianas">Cartesianas (x,v,a vs t)</option>
-            <option value="polares">Polares (Vectores)</option>
-            <option value="intrinsecas">Intrínsecas (Vectores)</option>
+            <option value="cartesianas">Cartesianas</option>
+            <option value="polares">Polares</option>
+            <option value="intrinsecas">Intrínsecas</option>
             <option value="none">Sin gráfico</option>
           </select>
 
-          <input 
-            type="text" 
-            value={inputValue} 
-            onChange={e => setInputValue(e.target.value)} 
-            onKeyDown={e => e.key === 'Enter' && handleSend()} 
+          <input
+            type="text"
+            value={inputValue}
+            onChange={e => setInputValue(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSend()}
             onPaste={handlePaste}
-            placeholder="Enviá tu ejercicio polares/intrínsecas... (Podés pegar imágenes con Ctrl+V)" 
+            placeholder="Ingrese su pregunta"
           />
           <button className="send-btn" onClick={handleSend} disabled={loading}><Send size={18} /></button>
         </div>

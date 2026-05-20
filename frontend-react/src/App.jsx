@@ -22,15 +22,26 @@ const VectorDiagram = ({ title, elements, zoom: initialZoom = 1.1 }) => {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [lastPos, setLastPos] = useState({ x: 0, y: 0 });
-
+  const viewportRef = useRef(null);
   const size = 450;
   const center = size / 2;
 
-  const handleWheel = (e) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    setScale(prev => Math.min(Math.max(prev * delta, 20), 500));
-  };
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      setScale(prev => Math.min(Math.max(prev * delta, 20), 500));
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      el.removeEventListener('wheel', onWheel);
+    };
+  }, []);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -79,8 +90,8 @@ const VectorDiagram = ({ title, elements, zoom: initialZoom = 1.1 }) => {
       </div>
 
       <div
+        ref={viewportRef}
         className="vector-viewport"
-        onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

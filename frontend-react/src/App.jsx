@@ -6,7 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Paperclip, Send, X } from 'lucide-react'
 import './index.css'
 
-const API_URL = 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const COLORS = ['#5865F2', '#F0A500', '#22C55E', '#EC4899', '#06B6D4'];
 
 // --- COMPONENTE DE DIAGRAMA VECTORIAL INTERACTIVO ---

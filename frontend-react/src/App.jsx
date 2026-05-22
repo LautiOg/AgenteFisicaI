@@ -306,6 +306,7 @@ function App() {
             <option value="cartesianas">Cartesianas</option>
             <option value="polares">Polares</option>
             <option value="intrinsecas">Intrínsecas</option>
+            <option value="cuerpo_aislado">Diagrama de cuerpo aislado</option>
             <option value="none">Sin gráfico</option>
           </select>
 

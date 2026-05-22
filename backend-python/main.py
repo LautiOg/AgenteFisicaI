@@ -138,6 +138,8 @@ def chat(request: ChatRequest):
             graph_instruction = "ESTÁ OBLIGADO A USAR [DIAGRAM] con coordenadas POLARES (r, theta). PROHIBIDO USAR [CHART]."
         elif request.graphType == "intrinsecas":
             graph_instruction = "ESTÁ OBLIGADO A USAR [DIAGRAM] con coordenadas INTRÍNSECAS (tangencial, normal). PROHIBIDO USAR [CHART]."
+        elif request.graphType == "cuerpo_aislado":
+            graph_instruction = "ESTÁ OBLIGADO A USAR [DIAGRAM] para dibujar un DIAGRAMA DE CUERPO AISLADO (DCL). Dibuja el cuerpo en el origen (0,0) o en su posición, y representa todas las fuerzas actuantes (peso, normal, tensión, rozamiento, empuje, etc.) como vectores con sus etiquetas de fuerza correspondientes. PROHIBIDO USAR [CHART]."
         elif request.graphType == "none":
             graph_instruction = "EL USUARIO PIDIÓ NO INCLUIR GRÁFICOS. PROHIBIDO USAR [CHART] Y [DIAGRAM]."
         else:

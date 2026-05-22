@@ -54,7 +54,13 @@ def _get_vectorstore():
     return Chroma(persist_directory=CHROMA_DIR, embedding_function=EMBEDDINGS)
 
 def ingest_new_pdfs():
-    indexed = _load_indexed()
+    db_file = os.path.join(CHROMA_DIR, "chroma.sqlite3")
+    if not os.path.exists(db_file) or os.path.getsize(db_file) == 0:
+        print("⚠️ Base de datos vacía o inexistente. Forzando reindexación completa...")
+        indexed = set()
+    else:
+        indexed = _load_indexed()
+        
     all_pdfs = [f for f in os.listdir(DOCS_DIR) if f.lower().endswith(".pdf")]
     new_pdfs = [f for f in all_pdfs if f not in indexed]
     

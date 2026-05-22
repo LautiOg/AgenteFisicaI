@@ -1,3 +1,12 @@
+---
+title: Agente Fisica Backend
+emoji: ⚛️
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
 # Agente de Física — RAG con Gemini
 
 Asistente de IA que responde preguntas **solo** con el material de PDFs que vos copiás al proyecto.

@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # Evitar que Python escriba archivos .pyc y activar unbuffered stdout/stderr
 ENV PYTHONDONTWRITEBYTECODE=1 \
